@@ -1,5 +1,6 @@
-const controllers = require('../controllers/jumps.controller');
 const express = require('express');
+const controllers = require('./jumps.controller');
+const verifyToken = require('../auth/auth.middleware');
 
 var jumpsRoutes = express.Router();
 /**
@@ -11,14 +12,16 @@ var jumpsRoutes = express.Router();
 /**
  * Routes for all jumps. Evaluates to `/locations/:locationId:/jumps`.
  */
-jumpsRoutes.get('/', controllers.getAllJumps).post('/', controllers.createJump);
+jumpsRoutes
+  .get('/', verifyToken, controllers.getAllJumps)
+  .post('/', verifyToken, controllers.createJump);
 
 /**
  * Routes for a jump by id. Evalutes to `/locations/:locationId/jumps/:jumpId`.
  */
 jumpsRoutes
-  .get('/:jumpId', controllers.getJump)
-  .put('/:jumpId', controllers.updateJump)
-  .delete('/:jumpId', controllers.deleteJump);
+  .get('/:jumpId', verifyToken, controllers.getJump)
+  .put('/:jumpId', verifyToken, controllers.updateJump)
+  .delete('/:jumpId', verifyToken, controllers.deleteJump);
 
   module.exports = jumpsRoutes;

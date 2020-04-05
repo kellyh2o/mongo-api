@@ -1,0 +1,36 @@
+// Require Mongoose
+const mongoose = require('mongoose');
+
+// Define a schema
+const Schema = mongoose.Schema;
+
+// Create a new Schema for our collection
+const ProjectLocationAssignmentsSchema = new Schema({
+  projectId: {
+    type: String,
+    required: 'A project id is required to create a new project-location assignment'
+  },
+  locationId: {
+    type: String,
+    required: 'A location id is required to create a new project-location assignment'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  createdBy: {
+    type: String,
+    default: null
+  },
+  updatedAt: {
+    type: Date,
+    default: null
+  },
+  updatedBy: {
+    type: String,
+    default: null
+  }
+});
+
+// Expose the collections functions for use in our controller
+module.exports = mongoose.model('ProjectLocationAssignments', ProjectLocationAssignmentsSchema);
